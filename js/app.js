@@ -40,7 +40,10 @@ const bangApp = {
     lives: [],
     bullets: [],
     balls: [],
+    extraLifes: [],
+    framesCounter: 0,
     ctx: undefined,
+
     init(bangId) {
         this.ctx = document.querySelector(bangId).getContext('2d')
         this.reset()
@@ -49,7 +52,9 @@ const bangApp = {
         this.createBall()
         this.drawAll()
         this.setEventListeners()
+        console.log(this.lives)
     },
+
     setDimensions(bangId) {
         this.canvasSize = {
             w: 1400,
@@ -58,6 +63,7 @@ const bangApp = {
         document.querySelector(bangId).setAttribute('width', this.canvasSize.w)
         document.querySelector(bangId).setAttribute('height', this.canvasSize.h)
     },
+
     drawBackground() {
         this.ctx.fillStyle = 'dodgerblue'
         this.ctx.fillRect(0, 0, this.canvasSize.w, this.canvasSize.h)
@@ -74,13 +80,26 @@ const bangApp = {
         this.intervalId = setInterval(() => {
             this.clearAll()
             this.drawBackground()
+            this.drawLives()
             this.player.draw()
             this.bullets.forEach(element => element.draw());
             this.clearBullets()
             this.balls.forEach(element => element.draw());
+            this.extraLifes.forEach(element => element.draw());
             this.bulletBallColission();
             this.ballPlayerColission();
-        }, 1000/this.fps)
+            this.generateExtraLifes();
+            this.drawExtraLife();
+            this.clearExtraLifes();
+            this.playerExtraLifeColission();
+            this.framesCounter > 5000 ? this.framesCounter = 0 : this.framesCounter++;
+        }, 1000/this.fps)        
+    },
+
+    drawExtraLife() {
+        this.extraLifes.forEach(element =>  {
+            element.draw()
+    })
     },
 
     clearAll() {
@@ -92,28 +111,38 @@ const bangApp = {
     },
 
     createBall() {
-        const newBall = new Ball(this.ctx, this.canvasSize, 600, 5, 200, 200, 17.5)  // cambiar números a relativos
+        const newBall = new Ball(this.ctx, this.canvasSize, 600, 5, 200, 200, 15)  // cambiar números a relativos
         this.balls.push(newBall)
     },
 
     createMediumBallRight(ballPos) {
-        const newMediumBall = new Ball(this.ctx, this.canvasSize, ballPos.x, ballPos.y, 100, 100, 20)  // cambiar números a relativos
+        const newMediumBall = new Ball(this.ctx, this.canvasSize, ballPos.x, ballPos.y, 100, 100, 16)  // cambiar números a relativos
         this.balls.push(newMediumBall)
     },
 
     createMediumBallLeft(ballPos) {
-        const newMediumBall = new Ball(this.ctx, this.canvasSize, ballPos.x, ballPos.y, 100, 100, -20)  // cambiar números a relativos
+        const newMediumBall = new Ball(this.ctx, this.canvasSize, ballPos.x, ballPos.y, 100, 100, -16)  // cambiar números a relativos
         this.balls.push(newMediumBall)
     },
 
     createSmallBallLeft(ballPos) {
-        const newSmallBall = new Ball(this.ctx, this.canvasSize, ballPos.x, ballPos.y, 50, 50, -22.5)  // cambiar números a relativos
+        const newSmallBall = new Ball(this.ctx, this.canvasSize, ballPos.x, ballPos.y, 50, 50, -18)  // cambiar números a relativos
         this.balls.push(newSmallBall)
     },
 
     createSmallBallRight(ballPos) {
-        const newSmallBall = new Ball(this.ctx, this.canvasSize, ballPos.x, ballPos.y, 50, 50, 22.5)  // cambiar números a relativos
+        const newSmallBall = new Ball(this.ctx, this.canvasSize, ballPos.x, ballPos.y, 50, 50, 18)  // cambiar números a relativos
         this.balls.push(newSmallBall)
+    },
+
+    generateExtraLifes() {
+        if (this.framesCounter % 200 === 0 && this.framesCounter !== 0) {
+        this.extraLifes.push(new ExtraLife(this.ctx, Math.floor(Math.random() * (this.canvasSize.w - 0 + 1) + 0)))
+        }
+    },
+
+    clearExtraLifes() {
+        this.extraLifes = this.extraLifes.filter(xlife => xlife.extraLifePos.y < this.canvasSize.h)
     },
 
     setEventListeners() {
@@ -133,6 +162,27 @@ const bangApp = {
         }
     },
 
+    drawLives() {
+        switch (this.lives.length) {
+            case 0:
+               selectHeartImage = './images/three-hearts.png'
+                break;
+            case 1:
+                selectHeartImage = './images/two-hearts.png'
+                break;
+            case 2:
+                selectHeartImage = './images/one-heart.png'
+                break;
+            default:
+                break;
+        }
+
+        this.livesInstance = new Image ()
+        this.livesInstance.src = selectHeartImage
+        this.ctx.drawImage(this.livesInstance, 50, 8, 35, 35) // cambiar números a relativos
+
+    },
+
     clearBullets() {
         this.bullets = this.bullets.filter(bullet => bullet.bulletPos.y > 0 - bullet.bulletSize.h)
     },
@@ -140,6 +190,7 @@ const bangApp = {
     restart() {
         this.bullets = []
         this.balls = []
+        this.extraLifes = []
         this.createAll()
         this.createBall()
     },
@@ -149,6 +200,7 @@ const bangApp = {
         this.lives = []
         this.bullets = []
         this.balls = []
+        this.extraLifes = []
     },
 
     bulletBallColission() {
@@ -200,7 +252,22 @@ const bangApp = {
                 }
             }
         })
-    }
+    },
+
+    playerExtraLifeColission() {
+        this.extraLifes.forEach((eachExtraLife) => {
+            if (eachExtraLife.extraLifePos.x < this.player.playerPos.x + this.player.playerSize.w &&
+                eachExtraLife.extraLifePos.x + eachExtraLife.extraLifeSize.w > this.player.playerPos.x &&
+                eachExtraLife.extraLifePos.y < this.player.playerPos.y + this.player.playerSize.h &&
+                eachExtraLife.extraLifeSize.h + eachExtraLife.extraLifePos.y > this.player.playerPos.y) {
+                if (this.lives.length > 0) {
+                    this.lives.shift()
+                    this.extraLifes.shift()
+                }  
+                }
+
+    })
+}
 }
 
 

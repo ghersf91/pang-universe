@@ -19,17 +19,17 @@ class Player {
     draw() {
         this.ctx.drawImage(this.imageInstance, this.playerPos.x, this.playerPos.y, this.playerSize.w, this.playerSize.h)
     }
-    moveLeft () {
-         if (this.playerPos.x <= 0) {
-            this.player.x = 0
+    moveLeft() { // cambiar números a relativos
+         if (this.playerPos.x <= 45) {
+            this.playerPos.x = 45
          }
-        this.playerPos.x -= 50
+        this.playerPos.x -= 45
     }
 
-    moveRight() {
-        if (this.playerPos.x >= 1250) {
-           this.playerPos.x = 1250
+    moveRight() { // cambiar números a relativos
+        if (this.playerPos.x >= 1275) {
+           this.playerPos.x = 1275
          }
-        this.playerPos.x += 50
+        this.playerPos.x += 45
     }
 }
