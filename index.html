@@ -11,29 +11,24 @@
 
 <body>
     <section class="start-game">
-        <img src="./images/start-game-background.png" alt="">
+       <div class="start-div">
         <button id="start-button">Start game</button>
-        <article>
-            <img src="./images/arrow-commands.png" alt="">
-            <h2>use the left and right arrows to move</h2>
-        </article>
-        <article>
-            <img src="./images/spacebar-command.png" alt="">
-            <h2>use the spacebar to shoot</h2>
-        </article>
+       </div>
     </section>
 
     <canvas id="bang" width="1400" height="650" class="hide"></canvas>
 
 
     <section class="you-win hide">
-        <img src="./images/you-win-background.png" alt="">
-        <button id="you-win-button">Play again</button>
+        <div class="over-win-div">
+            <button id="you-win-button">Play again</button>
+        </div>
     </section>
 
     <section class="game-over hide">
-        <img src="./images/game-over-background.png" alt="">
-        <button id="game-over-button">Play again</button>
+        <div class="over-win-div">
+            <button id="game-over-button">Play again</button>
+        </div>
     </section>
 
     <script src="js/lives.js"></script>

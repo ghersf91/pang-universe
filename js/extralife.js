@@ -2,9 +2,9 @@ class ExtraLife {
     constructor(ctx, extraLifePosX) {
         this.ctx = ctx
         this.extraLifePos = { x: extraLifePosX, y: 0}
-        this.extraLifeSize = { w: 40, h: 40 } // cambiar números a relativos
+        this.extraLifeSize = { w: 60, h: 60 } // cambiar números a relativos
         this.extraLifeVel = { x: 5, y: 0 }
-        this.extraLifeImage = `./images/live.png`
+        this.extraLifeImage = `./images/corazon.png`
         this.imageInstance = undefined
         this.init()
     }

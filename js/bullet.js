@@ -2,9 +2,9 @@
         constructor(ctx, posX, posY) {
             this.ctx = ctx
             this.bulletPos = {x: posX, y: posY}
-            this.bulletImage = `./images/bala.png`
+            this.bulletImage = `./images/rayo.png`
             this.imageInstance = undefined
-            this.bulletSize = { w: 21, h: 28 }
+            this.bulletSize = { w: 150, h: 100 }
 
             this.init()
             this.move()

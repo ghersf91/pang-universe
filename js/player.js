@@ -1,9 +1,9 @@
 class Player {
     constructor(ctx, posX, width, height) {
         this.ctx = ctx
-        this.playerPos = { x: posX, y: 500 }
+        this.playerPos = { x: posX, y: 592.5 }
         this.playerSize = { w: width, h: height }
-        this.playerImage = `./images/munequito.png`
+        this.playerImage = `./images/robot.png`
         this.imageInstance = undefined
         this.lives = 3
 
@@ -19,6 +19,7 @@ class Player {
     draw() {
         this.ctx.drawImage(this.imageInstance, this.playerPos.x, this.playerPos.y, this.playerSize.w, this.playerSize.h)
     }
+    
     moveLeft() { // cambiar números a relativos
          if (this.playerPos.x <= 45) {
             this.playerPos.x = 45

@@ -1,3 +1,103 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+
 .hide {
     display: none;
 }
+
+#bang {
+    background-image: url("../images/fondo-correcto.png");
+    background-size: cover;
+    height: 100vh;
+    width: 100vw;
+}
+
+ #you-win-button {
+     padding: 15px 30px;
+     font-family: 'Gill Sans', 'Gill Sans MT', 'Calibri', 'Trebuchet MS', sans-serif;
+     font-size: 20px;
+     font-weight: bold;
+     text-transform: uppercase;
+     border: 2px solid rgb(255, 102, 0);
+     border-radius: 10px; 
+ }
+
+ .you-win {
+    background-image: url("../images/you-win-new.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100vh;
+    width: 100vw;
+    text-align: center;
+ }
+
+ #game-over-button {
+    padding: 15px 30px;
+    font-family: 'Gill Sans', 'Gill Sans MT', 'Calibri', 'Trebuchet MS', sans-serif;
+    font-size: 20px;
+    font-weight: bold;
+    text-transform: uppercase;
+    border: 2px solid rgb(255, 102, 0);
+    border-radius: 10px;
+ }
+
+ .game-over {
+    background-image: url("../images/game over.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100vh;
+    width: 100vw;
+    text-align: center;
+ }
+
+.over-win-div {
+    padding-top: 575px;
+    margin-right: 25px;
+}
+
+ #start-button {
+    padding: 15px 30px;
+    font-family: 'Gill Sans', 'Gill Sans MT', 'Calibri', 'Trebuchet MS', sans-serif;
+    font-size: 20px;
+    font-weight: bold;
+    text-transform: uppercase;
+    border: 2px solid rgb(255, 102, 0);
+    border-radius: 10px;
+ }
+
+ .start-game {
+    background-image: url("../images/startgame.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100vh;
+    width: 100vw;
+    text-align:right;     
+ }
+
+ .start-div {
+    padding-top: 100px;
+    padding-right: 100px;
+ }
+
+  #you-win-button:hover {
+    background-color: lightgray;
+    border: 2px solid blue;
+  }
+
+  #game-over-button:hover {
+    background-color: lightgray;
+    border: 2px solid blue;
+  }
+
+  #start-button:hover {
+    background-color: lightgray;
+    border: 2px solid blue;
+  }
+     
+     
+ 
+
+ 
+

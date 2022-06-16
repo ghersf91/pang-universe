@@ -23,6 +23,11 @@ window.onload = () => {
 
 function startGame() {
     bangApp.init('#bang')
+    this.playingMusic = new Audio("./audio/playing.mp3")
+    this.playingMusic.play()
+    this.playingMusic.loop = true.loop
+
+    this.playingMusic.volume = 2  
 }
 
 const bangApp = {
@@ -53,33 +58,24 @@ const bangApp = {
         this.drawAll()
         this.setEventListeners()
         console.log(this.lives)
+
+        this.ballPlayerHit = new Audio("./audio/ball-player-collission.mp3")
+        this.ballPlayerHit.preload = 'auto'
+        this.ballPlayerHit.load()
     },
 
     setDimensions(bangId) {
         this.canvasSize = {
-            w: 1400,
-            h: 650
+            w: 1450,
+            h: 700
         }
         document.querySelector(bangId).setAttribute('width', this.canvasSize.w)
         document.querySelector(bangId).setAttribute('height', this.canvasSize.h)
     },
 
-    drawBackground() {
-        this.ctx.fillStyle = 'dodgerblue'
-        this.ctx.fillRect(0, 0, this.canvasSize.w, this.canvasSize.h)
-
-        this.ctx.fillStyle = 'saddlebrown'
-        this.ctx.fillRect(0, 612.5, this.canvasSize.w, this.canvasSize.h / 8)
-
-        this.ctx.fillStyle = 'black'
-        this.ctx.fillRect(this.canvasSize.w * 0.15, 0, this.canvasSize.w * 0.70, this.canvasSize.h / 8)
-
-    },
-
     drawAll() {
         this.intervalId = setInterval(() => {
             this.clearAll()
-            this.drawBackground()
             this.drawLives()
             this.player.draw()
             this.bullets.forEach(element => element.draw());
@@ -93,13 +89,13 @@ const bangApp = {
             this.clearExtraLifes();
             this.playerExtraLifeColission();
             this.framesCounter > 5000 ? this.framesCounter = 0 : this.framesCounter++;
-        }, 1000/this.fps)        
+        }, 1000 / this.fps)
     },
 
     drawExtraLife() {
-        this.extraLifes.forEach(element =>  {
+        this.extraLifes.forEach(element => {
             element.draw()
-    })
+        })
     },
 
     clearAll() {
@@ -107,7 +103,7 @@ const bangApp = {
     },
 
     createAll() {
-        this.player = new Player(this.ctx, 450, 80, 120) // cambiar números a relativos
+        this.player = new Player(this.ctx, 450, 120, 120) // cambiar números a relativos
     },
 
     createBall() {
@@ -137,7 +133,7 @@ const bangApp = {
 
     generateExtraLifes() {
         if (this.framesCounter % 200 === 0 && this.framesCounter !== 0) {
-        this.extraLifes.push(new ExtraLife(this.ctx, Math.floor(Math.random() * (this.canvasSize.w - 0 + 1) + 0)))
+            this.extraLifes.push(new ExtraLife(this.ctx, Math.floor(Math.random() * (this.canvasSize.w - 0 + 1) + 0)))
         }
     },
 
@@ -156,7 +152,11 @@ const bangApp = {
                     this.player.moveRight()
                     break;
                 case ' ':
-                    this.bullets.push(new Bullet(this.ctx, this.player.playerPos.x + this.player.playerSize.w / 2, this.player.playerPos.y))
+                    this.bullets.push(new Bullet(this.ctx, this.player.playerPos.x + this.player.playerSize.w / 8, (this.player.playerPos.y / 10) * 9.5))
+                    this.bulletShoot = new Audio("./audio/bullet-shoot.mp3")
+                    this.bulletShoot.play()
+                    this.bulletShoot.loop = false
+                    this.bulletShoot.volume = 2
                     break;
             }
         }
@@ -165,22 +165,21 @@ const bangApp = {
     drawLives() {
         switch (this.lives.length) {
             case 0:
-               selectHeartImage = './images/three-hearts.png'
+                selectHeartImage = './images/tres-corazones.png'
                 break;
             case 1:
-                selectHeartImage = './images/two-hearts.png'
+                selectHeartImage = './images/dos-corazones.png'
                 break;
             case 2:
-                selectHeartImage = './images/one-heart.png'
+                selectHeartImage = './images/un-corazon.png'
                 break;
             default:
                 break;
         }
 
-        this.livesInstance = new Image ()
+        this.livesInstance = new Image()
         this.livesInstance.src = selectHeartImage
-        this.ctx.drawImage(this.livesInstance, 50, 8, 35, 35) // cambiar números a relativos
-
+        this.ctx.drawImage(this.livesInstance, 50, 8, 100, 40) // cambiar números a relativos
     },
 
     clearBullets() {
@@ -214,13 +213,25 @@ const bangApp = {
                         this.createMediumBallRight(this.balls[index].ballPos)
                         this.createMediumBallLeft(this.balls[index].ballPos)
                         this.balls.splice(index, 1)
+                        this.bulletBallMusic = new Audio("./audio/bullet-ball-hit.mp3")
+                        this.bulletBallMusic.play()
+                        this.bulletBallMusic.loop = false
+                        this.bulletBallMusic.volume = 4
                     } else if (eachBall.ballSize.w === 100) {
                         this.createSmallBallRight(this.balls[index].ballPos)
                         this.createSmallBallLeft(this.balls[index].ballPos)
                         this.balls.splice(index, 1)
+                        this.bulletBallMusic = new Audio("./audio/bullet-ball-hit.mp3")
+                        this.bulletBallMusic.play()
+                        this.bulletBallMusic.loop = false
+                        this.bulletBallMusic.volume = 4
                     } else {
                         if (this.balls.length > 1) {
                             this.balls.splice(index, 1)
+                            this.bulletBallMusic = new Audio("./audio/bullet-ball-hit.mp3")
+                            this.bulletBallMusic.play()
+                            this.bulletBallMusic.loop = false
+                            this.bulletBallMusic.volume = 4
                         } else {
                             this.balls.splice(index, 1)
                             document.querySelector('canvas').setAttribute('class', 'hide')
@@ -240,15 +251,13 @@ const bangApp = {
                 eachBall.ballPos.x + eachBall.ballSize.w > this.player.playerPos.x &&
                 eachBall.ballPos.y < this.player.playerPos.y + this.player.playerSize.h &&
                 eachBall.ballSize.h + eachBall.ballPos.y > this.player.playerPos.y) {
+                this.ballPlayerHit.play()
                 this.lives.push('impact')
                 this.restart()
                 if (this.lives.length === this.player.lives) {
                     document.querySelector('canvas').setAttribute('class', 'hide')
                     document.querySelector('.game-over').classList.toggle('hide')
                     this.reset()
-                    console.log('game over')
-                } else {
-                    console.log(this.lives)
                 }
             }
         })
@@ -263,11 +272,14 @@ const bangApp = {
                 if (this.lives.length > 0) {
                     this.lives.shift()
                     this.extraLifes.shift()
-                }  
+                    this.extraLifeSound = new Audio("./audio/extra-life.mp3") // cambiar por nuevo sonido
+                    this.extraLifeSound.play()
+                    this.extraLifeSound.loop = false
+                    this.extraLifeSound.volume = 4
                 }
-
-    })
-}
+            }
+        })
+    }
 }
 
 
