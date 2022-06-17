@@ -25,7 +25,7 @@ function startGame() {
     bangApp.init('#bang')
     this.playingMusic = new Audio("./audio/playing.mp3")
     this.playingMusic.play()
-    this.playingMusic.loop = true.loop
+    this.playingMusic.loop = true
 
     this.playingMusic.volume = 2  
 }
