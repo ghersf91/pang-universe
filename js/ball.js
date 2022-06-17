@@ -7,7 +7,7 @@ class Ball {
         this.ballVel = { x: ballVelX, y: -8 }
         this.bounceVel = { x: 0, y: -15 } 
         this.physics = { gravity: 0.3 }
-        this.ballImage = `./images/marte.png`
+        this.ballImage = `./images/mars.png`
         this.imageInstance = undefined
 
         this.init()

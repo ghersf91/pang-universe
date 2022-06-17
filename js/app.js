@@ -165,13 +165,13 @@ const bangApp = {
     drawLives() {
         switch (this.lives.length) {
             case 0:
-                selectHeartImage = './images/tres-corazones.png'
+                selectHeartImage = './images/three-hearts.png'
                 break;
             case 1:
-                selectHeartImage = './images/dos-corazones.png'
+                selectHeartImage = './images/two-hearts.png'
                 break;
             case 2:
-                selectHeartImage = './images/un-corazon.png'
+                selectHeartImage = './images/one-heart.png'
                 break;
             default:
                 break;
@@ -213,6 +213,7 @@ const bangApp = {
                         this.createMediumBallRight(this.balls[index].ballPos)
                         this.createMediumBallLeft(this.balls[index].ballPos)
                         this.balls.splice(index, 1)
+                        this.bullets.shift()
                         this.bulletBallMusic = new Audio("./audio/bullet-ball-hit.mp3")
                         this.bulletBallMusic.play()
                         this.bulletBallMusic.loop = false
@@ -221,6 +222,7 @@ const bangApp = {
                         this.createSmallBallRight(this.balls[index].ballPos)
                         this.createSmallBallLeft(this.balls[index].ballPos)
                         this.balls.splice(index, 1)
+                        this.bullets.shift()
                         this.bulletBallMusic = new Audio("./audio/bullet-ball-hit.mp3")
                         this.bulletBallMusic.play()
                         this.bulletBallMusic.loop = false
@@ -228,18 +230,19 @@ const bangApp = {
                     } else {
                         if (this.balls.length > 1) {
                             this.balls.splice(index, 1)
+                            this.bullets.shift()
                             this.bulletBallMusic = new Audio("./audio/bullet-ball-hit.mp3")
                             this.bulletBallMusic.play()
                             this.bulletBallMusic.loop = false
                             this.bulletBallMusic.volume = 4
                         } else {
                             this.balls.splice(index, 1)
+                            this.bullets.shift()
                             document.querySelector('canvas').setAttribute('class', 'hide')
                             document.querySelector('.you-win').classList.toggle('hide')
                             this.reset()
                         }
                     }
-                    this.bullets.shift()
                 }
             })
         })

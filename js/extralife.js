@@ -4,7 +4,7 @@ class ExtraLife {
         this.extraLifePos = { x: extraLifePosX, y: 0}
         this.extraLifeSize = { w: 60, h: 60 } // cambiar números a relativos
         this.extraLifeVel = { x: 5, y: 0 }
-        this.extraLifeImage = `./images/corazon.png`
+        this.extraLifeImage = `./images/extra-life-heart.png`
         this.imageInstance = undefined
         this.init()
     }
