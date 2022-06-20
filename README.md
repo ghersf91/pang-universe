@@ -1,6 +1,6 @@
-# project-1-carol-ghers
+# pang-universe
 
-simple pang game with a science fiction theme.
+simple pang game with a science fiction theme, created by Carolina Arlone and Ghers Fisman.
 
 use left and right arrows to move the robot, and the spacebar to shoot and destroy the planets.
 
