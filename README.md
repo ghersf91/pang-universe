@@ -2,7 +2,7 @@ Project URL: https://ghersf91.github.io/pang-universe/
 
 # pang-universe
 
-simple pang game with a science fiction theme, created by Carolina Arlone and Ghers Fisman.
+simple pang game with a science fiction theme, created by Carolina Arlone and Ghers Fisman using Canvas (JavaScript), HTML and CSS.
 
 use left and right arrows to move the robot, and the spacebar to shoot and destroy the planets.
 
